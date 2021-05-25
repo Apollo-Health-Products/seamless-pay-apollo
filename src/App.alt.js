@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-no-undef */
 import React from "react";
-import createReactClass from "create-react-class";
 
 const styles = {
   input: {
@@ -21,26 +20,26 @@ const styles = {
 
 const apiKey = "pk_01F5EZF3N3X4CB1ZHKVMKR5ZVC";
 
-const SeamlesspayExample = createReactClass({
-  initialState: function () {
+class SeamlesspayExample extends React.Component {
+  initialState = function () {
     return {
       hostedFields: null,
     };
-  },
-  handleReady: function (hostedFields) {
+  };
+  handleReady = function (hostedFields) {
     this.setState({ hostedFields: hostedFields });
-  },
-  handleValidityChange: function (event) {
+  };
+  handleValidityChange = function (event) {
     console.log("event.fields: ", event.fields);
-  },
-  handleCardTypeChange: function (event) {
+  };
+  handleCardTypeChange = function (event) {
     console.log("event.cards: ", event.cards);
-  },
-  handleSdkError: function (error) {
+  };
+  handleSdkError = function (error) {
     console.log("SEAMLESSPAY SDK ERROR: ");
     console.error(JSON.stringify(error));
-  },
-  handleSubmit: function (event) {
+  };
+  handleSubmit = function (event) {
     event.preventDefault();
     if (!this.state.hostedFields) {
       return;
@@ -57,18 +56,18 @@ const SeamlesspayExample = createReactClass({
       // This is where you would submit payload.token to your server
       alert(`Submit token ${payload.token} to your server here!`);
     });
-  },
+  };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit.bind(this)}>
         <CardPayments
           seamless={window.seamlesspay}
           environment="sandbox"
           paymentType="credit_card"
           styles={styles}
           authorization={apiKey}
-          onReady={this.handleReady}
+          onReady={this.handleReady.bind(this)}
           onValidityChange={this.handleValidityChange}
           onCardTypeChange={this.handleCardTypeChange}
           onError={this.handleSdkError}
@@ -79,7 +78,7 @@ const SeamlesspayExample = createReactClass({
         <button>Submit</button>
       </form>
     );
-  },
-});
+  }
+}
 
 export default SeamlesspayExample;
