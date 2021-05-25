@@ -1,0 +1,32 @@
+{
+    "extends": "react-app",
+    "overrides": [
+      {
+        "parserOptions": {
+          "ecmaVersion": 2021,
+          "ecmaFeatures": {
+            "impliedStrict": true
+          }
+        },
+        "files": ["**/*.js?(x)"],
+        "rules": {
+          "no-unused-vars": "warn",
+          "no-console": "error",
+          "no-var": "warn",
+          "no-duplicate-imports": "error",
+          "no-shadow": "error",
+          "prefer-const": "warn",
+          "array-callback-return": "error",
+          "no-lone-blocks": "error",
+          "jsx-a11y/alt-text": "error",
+          "react/jsx-no-target-blank": "error",
+          "react/jsx-no-undef": ["error", { "allowGlobals": true }],
+          "import/order": [
+            "error",
+            { "newlines-between": "always-and-inside-groups" }
+          ]
+        }
+      }
+    ]
+  }
+  
