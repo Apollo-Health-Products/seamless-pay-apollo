@@ -19,7 +19,7 @@ const styles = {
   },
 };
 
-const apiKey = "pk_01F5EZF3N3X4CB1ZHKVMKR5ZVC";
+const apiKey = "";
 
 const SeamlesspayExample = createReactClass({
   initialState: function () {

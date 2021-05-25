@@ -18,7 +18,7 @@ const styles = {
   },
 };
 
-const apiKey = "pk_01F5EZF3N3X4CB1ZHKVMKR5ZVC";
+const apiKey = "";
 
 class SeamlesspayExample extends React.Component {
   initialState = function () {
