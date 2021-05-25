@@ -1,51 +1,34 @@
 /* eslint-disable react/jsx-no-undef */
-import React from "react";
-import createReactClass from "create-react-class";
+import React, { useState } from "react";
 
-const styles = {
-  input: {
-    "font-size": "12px",
-    "font-family": "helvetica, tahoma, calibri, sans-serif",
-    color: "#3a3a3a",
-  },
-  "input.invalid": {
-    color: "red",
-  },
-  "input.valid": {
-    color: "green",
-  },
-  ":focus": {
-    color: "black",
-  },
-};
+const apiKey = "pk_01F5EZF3N3X4CB1ZHKVMKR5ZVC";
 
-const apiKey = "";
+const SeamlesspayExample = () => {
+  const [hostedFields, setHostedFields] = useState(null);
 
-const SeamlesspayExample = createReactClass({
-  initialState: function () {
-    return {
-      hostedFields: null,
-    };
-  },
-  handleReady: function (hostedFields) {
-    this.setState({ hostedFields: hostedFields });
-  },
-  handleValidityChange: function (event) {
+  const handleReady = (fields) => {
+    setHostedFields(fields);
+  };
+
+  const handleValidityChange = (event) => {
     console.log("event.fields: ", event.fields);
-  },
-  handleCardTypeChange: function (event) {
+  };
+
+  const handleCardTypeChange = (event) => {
     console.log("event.cards: ", event.cards);
-  },
-  handleSdkError: function (error) {
+  };
+
+  const handleSdkError = (error) => {
     console.log("SEAMLESSPAY SDK ERROR: ");
     console.error(JSON.stringify(error));
-  },
-  handleSubmit: function (event) {
+  };
+
+  const handleSubmit = (event) => {
     event.preventDefault();
-    if (!this.state.hostedFields) {
+    if (!hostedFields) {
       return;
     }
-    this.state.hostedFields.tokenize(function (error, payload) {
+    hostedFields.tokenize(function (error, payload) {
       if (error) {
         console.log("SEAMLESSPAY SDK TOKENIZE ERROR: ");
         console.error(error);
@@ -57,29 +40,26 @@ const SeamlesspayExample = createReactClass({
       // This is where you would submit payload.token to your server
       alert(`Submit token ${payload.token} to your server here!`);
     });
-  },
+  };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <CardPayments
-          seamless={window.seamlesspay}
-          environment="sandbox"
-          paymentType="credit_card"
-          styles={styles}
-          authorization={apiKey}
-          onReady={this.handleReady}
-          onValidityChange={this.handleValidityChange}
-          onCardTypeChange={this.handleCardTypeChange}
-          onError={this.handleSdkError}
-        >
-          <HostedField name="accountNumber" placeholder="4242 4242 4242 4242" />
-          <HostedField name="expDate" placeholder="MM / YY" />
-        </CardPayments>
-        <button>Submit</button>
-      </form>
-    );
-  },
-});
+  return (
+    <form onSubmit={handleSubmit}>
+      <CardPayments
+        seamless={window.seamlesspay}
+        environment="sandbox"
+        txnType="CREDIT_CARD"
+        authorization={apiKey}
+        onReady={handleReady}
+        onValidityChange={handleValidityChange}
+        onCardTypeChange={handleCardTypeChange}
+        onError={handleSdkError}
+      >
+        <HostedField name="accountNumber" placeholder="4242 4242 4242 4242" />
+        <HostedField name="expDate" placeholder="MM / YY" />
+      </CardPayments>
+      <button>Submit</button>
+    </form>
+  );
+};
 
 export default SeamlesspayExample;
